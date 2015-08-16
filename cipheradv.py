@@ -6,7 +6,7 @@
 # author: vaemavric                                                            #
 # written in vi                                                                #
 #=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-#boobs
+
 # translate(mode, message, cipher) takes three arguements: 
 #  mode (String): the mode the program is running in;
 #  message (String): the message to be encoded;
