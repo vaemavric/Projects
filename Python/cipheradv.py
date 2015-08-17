@@ -63,10 +63,11 @@ def translate(mode, message, cipher, lettersOnly):
    i += 1
  return translated
 
-# translateFile(mode, cipher, filename, lettersOnly) takes three arguements:
+# translateFile(mode, cipher, filename, lettersOnly) takes four arguements:
 #  mode (String): the mode the program is running in;
 #  cipher (String): the cipher used to encode the file;
 #  filename (String): the txt file to be encoded. DO NOT INCLUDE FILE EXT
+#  lettersOnly (Boolean): if true encrypts only letters, else all symbols
 # The specified file is opened and each line is read, it is then passed to-
 # the translate function, where it is encrypted/decrypted. The returned-
 # string is then written to the output file as a new line
@@ -139,8 +140,4 @@ def getLettersonly():
   return True
  else:
   return False
-#try:
 translateFile(getMode(), getCipher(), getFilename(), getLettersonly())
-#except:
-# print('application quit')
-# quit()
