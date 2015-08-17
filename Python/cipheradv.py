@@ -7,35 +7,36 @@
 # written in vi                                                                #
 #=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 
-# translate(mode, message, cipher, lettersOnly) takes four arguements: 
+# translate(mode, message, cipher, lettersOnly) takes four arguments: 
 #  mode (String): the mode the program is running in;
 #  message (String): the message to be encoded;
 #  cipher (String): the cipher used to encode the message
 #  lettersOnly (Boolean): if true encrypts only letters, else all symbols
 # returns the string 'translated'.
-# The cipher used is different for each character in the message. (inc. spaces)
-# Each letter is converted into its ascii key, which is then shifted down 32,
-# so that the maths is easier. The cipher key is then added, and the resulting
-# number is taken modulo 94, such that it will correspond to an ascii character
-# 32 is then added such that the ascii code corresponds to a symbol.
+# The message is encrypted using a simply key shift, where each letter is key-
+# shifted by a different cipher. The resulting symbols are used to form a-
+# string which is then returned
 def translate(mode, message, cipher, lettersOnly):
  translated = ''
-# This cipher argument given is a single string consisiting of several keys-  
+# This cipher argument given is a single string consisting of several keys-  
 # separated by spaces, this turns the cipher object into a list of these keys.
  cipher = cipher.split() 
 # 'i' is a number used to record how many times the for loop has been carried-
 # out, it is used to work out which key to encrypt each letter.  
  i = 0
-# for loop, encrypts each letter invididually and adds them to the string-
-# 'translated'
+# This code is used if only letters are to be encrypted
  if lettersOnly:
   for symbol in message:
    if symbol.isalpha():
     num = ord(symbol)
-    if mode[0] == 'd':
-     num += -int(cipher[i%len(cipher)]) % 26
-    else:
+# add the cipher (mod26) to the ascii value of symbol, the cipher used depends-
+# on the position of the letter in the message
+    if mode[0] == 'e':
      num += int(cipher[i%len(cipher)]) % 26
+    else: 
+# makes the cipher key negative for decryption, same theory as above
+     num += -int(cipher[i%len(cipher)]) % 26
+# makes sure that the encrypted letters are mapped onto other letters
     if symbol.isupper():
      if num > ord('Z'):
       num -= 26
@@ -46,24 +47,36 @@ def translate(mode, message, cipher, lettersOnly):
       num -= 26
      elif num < ord('a'):
       num += 26
+# adds the character to the string 'translated'
     translated += chr(num)
+# tracks how many times the loop has been used, as to use the correct cipher.
     i += 1
    else:
     translated += symbol
+# This code is used if all characters are to be encrypted
  else:
   for symbol in message:
+# symbols ascii codes range from 32 to 126, this shifts the codes down so they-
+# run from 0 to 94, as to make the maths easier.
    num = ord(symbol) -32
-   if mode[0] == 'd':
-    num += -int(cipher[i%len(cipher)])
+# adds the cipher to the ascii value of the symbol, the cipher used depends-
+# on the position of the letter in the message
+   if mode[0] == 'e':
+    num += int(cipher[i%len(cipher)])
    else:
-    num += int(cipher[i%len(cipher)]) 
+# makes the cipher key negative for decryption, same theory as above
+    num += -int(cipher[i%len(cipher)]) 
+# the new number is taken mod94 as to map it to other symbols
    num %= 94
+# 32 is added so that the character is mapped to other ascii symbols
    num += 32
+# adds the character to the string 'translated'
    translated += chr(num)
+# tracks how many times the loop has been used, as to use the correct cipher.
    i += 1
  return translated
 
-# translateFile(mode, cipher, filename, lettersOnly) takes four arguements:
+# translateFile(mode, cipher, filename, lettersOnly) takes four arguments:
 #  mode (String): the mode the program is running in;
 #  cipher (String): the cipher used to encode the file;
 #  filename (String): the txt file to be encoded. DO NOT INCLUDE FILE EXT
@@ -134,10 +147,13 @@ def file_len(filename):
   i += 1
   return i
 
+# getLettersonly() returns True or False, used to get the encryption style.
 def getLettersonly():
  mode = raw_input('Encrypted all symbols or letters only? \n ')
  if mode[0] == 'l':
   return True
  else:
   return False
+  
+  
 translateFile(getMode(), getCipher(), getFilename(), getLettersonly())
