@@ -7,10 +7,11 @@
 # written in vi                                                                #
 #=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 
-# translate(mode, message, cipher) takes three arguements: 
+# translate(mode, message, cipher, lettersOnly) takes three arguements: 
 #  mode (String): the mode the program is running in;
 #  message (String): the message to be encoded;
 #  cipher (String): the cipher used to encode the message
+#  lettersOnly (Boolean): if true encrypts only letters, else all symbols
 # returns the string 'translated'.
 # The cipher used is different for each character in the message. (inc. spaces)
 # Each letter is converted into its ascii key, which is then shifted down 32,
@@ -27,16 +28,39 @@ def translate(mode, message, cipher):
  i = 0
 # for loop, encrypts each letter invididually and adds them to the string-
 # 'translated'
- for symbol in message:
-  num = ord(symbol) -32
-  if mode[0] == 'd':
-   num += -int(cipher[i%len(cipher)])
-  else:
-   num += int(cipher[i%len(cipher)]) 
-  num %= 94
-  num += 32
-  translated += chr(num)
-  i += 1
+ if lettersOnly:
+  for symbol in message:
+   if symbol.isalpha():
+    num = ord(symbol)
+    if mode[0] == 'd':
+     num += -int(cipher[i%len(cipher)])
+    else:
+     num += int(cipher[i%len(cipher)]) 
+    if symbol.isupper():
+     if num > ord('Z'):
+      num -= 26
+     elif num < ord('A'):
+      num += 26
+    elif symbol.islower():
+     if num > ord('z'):
+      num -= 26
+     elif num < ord('a'):
+      num += 26
+    translated += chr(num)
+    i += 1
+   else:
+    translated += symbol
+ else:
+  for symbol in message:
+   num = ord(symbol) -32
+   if mode[0] == 'd':
+    num += -int(cipher[i%len(cipher)])
+   else:
+    num += int(cipher[i%len(cipher)]) 
+   num %= 94
+   num += 32
+   translated += chr(num)
+   i += 1
  return translated
 
 # translateFile(mode, cipher, filename) takes three arguements:
@@ -112,7 +136,7 @@ def file_len(filename):
 
 try:
  translateFile(getMode(),
-  getCipher(), getFilename()) 
-except:
- print('application quit')
- quit()
+  getCipher(), getFilename(), True) 
+#except:
+# print('application quit')
+# quit()
