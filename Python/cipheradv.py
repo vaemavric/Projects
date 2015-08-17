@@ -2,6 +2,7 @@
 # cipheradv.py                                                                 #
 # a python script to encrypt and decrypt a message or file using a specified-  #
 # cipher                                                                       #
+# based on https://inventwithpython.com/chapter14.html                         #
 # date: 15/08/2015                                                             #
 # author: vaemavric                                                            #
 # written in vi                                                                #
