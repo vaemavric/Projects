@@ -7,7 +7,7 @@
 # written in vi                                                                #
 #=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 
-# translate(mode, message, cipher, lettersOnly) takes three arguements: 
+# translate(mode, message, cipher, lettersOnly) takes four arguements: 
 #  mode (String): the mode the program is running in;
 #  message (String): the message to be encoded;
 #  cipher (String): the cipher used to encode the message
@@ -18,7 +18,7 @@
 # so that the maths is easier. The cipher key is then added, and the resulting
 # number is taken modulo 94, such that it will correspond to an ascii character
 # 32 is then added such that the ascii code corresponds to a symbol.
-def translate(mode, message, cipher):
+def translate(mode, message, cipher, lettersOnly):
  translated = ''
 # This cipher argument given is a single string consisiting of several keys-  
 # separated by spaces, this turns the cipher object into a list of these keys.
@@ -33,9 +33,9 @@ def translate(mode, message, cipher):
    if symbol.isalpha():
     num = ord(symbol)
     if mode[0] == 'd':
-     num += -int(cipher[i%len(cipher)])
+     num += -int(cipher[i%len(cipher)]) % 26
     else:
-     num += int(cipher[i%len(cipher)]) 
+     num += int(cipher[i%len(cipher)]) % 26
     if symbol.isupper():
      if num > ord('Z'):
       num -= 26
@@ -63,14 +63,14 @@ def translate(mode, message, cipher):
    i += 1
  return translated
 
-# translateFile(mode, cipher, filename) takes three arguements:
+# translateFile(mode, cipher, filename, lettersOnly) takes three arguements:
 #  mode (String): the mode the program is running in;
 #  cipher (String): the cipher used to encode the file;
 #  filename (String): the txt file to be encoded. DO NOT INCLUDE FILE EXT
 # The specified file is opened and each line is read, it is then passed to-
 # the translate function, where it is encrypted/decrypted. The returned-
 # string is then written to the output file as a new line
-def translateFile(mode, cipher, filename):
+def translateFile(mode, cipher, filename, lettersOnly):
 # opens the input file as read only
  try:
   inp = open(filename  + '.txt', 'r')
@@ -90,10 +90,9 @@ def translateFile(mode, cipher, filename):
   outp = open(filename + 'encrypted.txt', 'w')
  for i in range(file_len(filename)):
   line = inp.next()
-  if mode[0] == 'd':
 # remove the carriage return symbol.
-   line = line.replace(line[-2:], '')
-  outp.write(translate(mode, line, cipher))
+  line = line.replace(line[-1:],'')
+  outp.write(translate(mode, line, cipher, lettersOnly))
   outp.write('\n') 
  inp.close()
  outp.close()
@@ -134,9 +133,14 @@ def file_len(filename):
   i += 1
   return i
 
-try:
- translateFile(getMode(),
-  getCipher(), getFilename(), True) 
+def getLettersonly():
+ mode = raw_input('Encrypted all symbols or letters only? \n ')
+ if mode[0] == 'l':
+  return True
+ else:
+  return False
+#try:
+translateFile(getMode(), getCipher(), getFilename(), getLettersonly())
 #except:
 # print('application quit')
 # quit()
