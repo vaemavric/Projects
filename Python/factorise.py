@@ -10,7 +10,7 @@ def primeFactorise(n):
  remove = []
  for e in factors:
   i = 0
-  while (factors.index(e) + i +1 < len(factors)):
+  while (factors.index(e) + i +1  < len(factors)):
    if e % factors[factors.index(e) +1 +i] == 0:
     remove.append(e)
     break
@@ -25,6 +25,8 @@ def primeFactorise(n):
   while a%e ==0 :
    a //= e
    i += 1
+   if n == 1:
+    break
   power.append(i)
  print power
 primeFactorise(int(raw_input("Type number to factorise:\n")))
