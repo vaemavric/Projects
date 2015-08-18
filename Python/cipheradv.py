@@ -88,7 +88,7 @@ def translate(mode, message, cipher, lettersOnly):
 def translateFile(mode, cipher, filename, lettersOnly):
 # opens the input file as read only
  try:
-  inp = open(filename  + '.txt', 'r')
+  inp = open('{}.txt'.format(filename), 'r')
  except:
   print('file does not exist')
 # tests if the programing is running in encrypt or decrypt mode
@@ -97,12 +97,12 @@ def translateFile(mode, cipher, filename, lettersOnly):
 # creates a new file with the same name as the original file + decrypted
   if 'encrypted' in filename:
    filenew = filename.replace('encrypted', '')
-   outp = open(filenew + 'decrypted.txt', 'w') 
+   outp = open('{}decrypted.txt'.format(filename), 'w') 
 # creates a new file with the same name as the original file + encrypted
   else:
-   outp = open(filename + 'decrypted.txt', 'w')
+   outp = open('{} enadecrypted.txt'.format(filename), 'w')
  else:
-  outp = open(filename + 'encrypted.txt', 'w')
+  outp = open('{} encrypted.txt'.format(filename), 'w')
  for i in range(file_len(filename)):
   line = inp.next()
 # remove the carriage return symbol.
@@ -142,7 +142,7 @@ def getFilename():
 
 # file_len(filename) returns the number of lines in the file 
 def file_len(filename):
- with open(filename + '.txt') as f:
+ with open('{}.txt'.format(filename)) as f:
   for i, index in enumerate(f):
    pass
   i += 1
