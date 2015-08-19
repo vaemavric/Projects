@@ -12,7 +12,7 @@ def primeFactorise(n):
   i = 0
   while (factors.index(e) + i +1  < len(factors)):
    if e % factors[factors.index(e) +1 +i] == 0:
-    if(factors.count(e) == remove.count(e)+1) and factors.count(e) > 1:
+    if(factors.count(e) == remove.count(e)+1) and factors.count(e) > 1 and factors.count(e) != 1:
      pass
     else:
      remove.append(e)
