@@ -47,5 +47,3 @@ L =  [i.split() for i in L]
 mGrid()
 elapsed = (time.time() - start)
 print elapsed
-
-test for github
