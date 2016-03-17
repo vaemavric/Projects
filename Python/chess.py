@@ -72,14 +72,37 @@ def isNumber(s):
 def canTake():
 	return False
 def isLegal(piece, pos, loc, board):
+	p = list(piece)
 	if pos == loc[piece]:
 		print "Piece already in that position"
 		return False
 	elif board[pos[0]][pos[1]] != "  " and not canTake():
 		print "Cannot take your own piece"
 	#'must be out of check condition'
-	#pawn rules
-	#king rules
+	#pawn rules, still needs 'enpasson', can be coded in 'can take condition'
+	elif isNumber(p[1]):
+		if((pos[1]-loc[piece][1] != 0) and not canTake()):
+			return False
+		elif((abs(pos[0]-loc[piece][0]) == 2) and (loc[piece][0] != 2 and loc[piece][0] != 7)):
+			return False
+		elif p[0] == "W":
+			if(((pos[0]-loc[piece][0]) > 2) or (pos[0]-loc[piece][0])< 0 ):
+				return False
+			else:
+				return True
+		else:
+			if(((pos[0]-loc[piece][0]) < -2) or (pos[0]-loc[piece][0])> 0 ):
+				return False
+			else:
+				return True		
+	#king rules # needs new position is not check test and castle king
+	elif p[1] == "K":
+		print "king"
+		if(abs(pos[0]-loc[piece][0]) !=1):
+			print (abs(pos[0]-loc[piece][0]))
+			return False
+		else:
+			return True
 	#queen rules
 	#bishop rules
 	#knight rules
@@ -128,6 +151,7 @@ def getMove(loc, board):
 b = createBoard()
 d = initLoc(b)
 taken = ["W3"]
+print d["W8"]
 
 while True:
 #While loop.
