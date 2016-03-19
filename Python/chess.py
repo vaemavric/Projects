@@ -125,6 +125,7 @@ def isLegal(piece, pos, loc, board):
 		else:
 			return True
 	#bishop rules
+	
 	#knight rules
 	#rook rules
 	else:
