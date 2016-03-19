@@ -114,16 +114,31 @@ def isLegal(piece, pos, loc, board):
 			return True
 	#queen rules
 	elif p[1] == "Q":
-		
-		if(not(pos[1]-loc[piece][1] == 0 or  pos[0]-loc[piece][0] ==0) and ( abs(pos[0]-loc[piece][0]) != 
+		if(not(pos[1]-loc[piece][1] == 0 or  pos[0]-loc[piece][0] ==0) and (abs(pos[0]-loc[piece][0]) != 
 		abs(pos[1]-loc[piece][1]))):
 			return False
 		else:
 			return True
 	#bishop rules
-	
+	elif p[1].lower() == "b":
+		if(abs(pos[0]-loc[piece][0]) != abs(pos[1]-loc[piece][1])):
+			return False
+		else:
+			return True
 	#knight rules
+	elif p[1].lower() == "n":
+		print "this is a knight"
+		if (((abs(pos[0]-loc[piece][0]) == 2) and abs(pos[1]-loc[piece][1]) ==1) or ((abs(pos[1]-loc[piece][1]) == 2) and 
+		abs(pos[0]-loc[piece][0]) ==1)):
+			return True
+		else:
+			return False
 	#rook rules
+	elif p[1].lower() == "r":
+		if not(pos[1]-loc[piece][1] == 0 or  pos[0]-loc[piece][0] ==0):
+			return False
+		else:
+			return True
 	else:
 		return True
 	
