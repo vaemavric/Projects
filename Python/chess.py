@@ -5,6 +5,7 @@
 # 														                       #
 # date: 16/03/2016                                                             #
 # author: vaemavric                                                            #
+# site: github.com/vaemavric/projects    			                           #
 # written in notepad++                                                         #
 #=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 turn = 0
@@ -54,36 +55,49 @@ def printBoard(board):
 		print "\n"
 
 def nextTurn():
+#nextTurn method updates the global turn, turn 0mod2 is white, 1mod2 is black
 	global turn
 	turn +=1
 def prevTurn():
+#prevTurn() removes  1 from the turn counter, used when incorrect move made
 	global turn
 	turn -=1
 def getTurn():
+#getTurn() returns the value of turn
 	return turn
 
 def isNumber(s):
+#isNumber takes the string and returns whether it is a number
 	try:
 		int(s)
 		return True
 	except ValueError:
 		return False
-
-def canTake():
-	return False
+def canTake(piece, pos, loc, board):
+#cantTake(Piece, pos, loc, board) tests whether a piece can take the piece in 
+#the new locations
+	if(piece[0] == board[pos[0]][pos[1]][0]):
+		return False
+	else:
+		return True
+		
 def isLegal(piece, pos, loc, board):
 	p = list(piece)
 	if pos == loc[piece]:
 		print "Piece already in that position"
 		return False
-	elif board[pos[0]][pos[1]] != "  " and not canTake():
+	elif board[pos[0]][pos[1]] != "  " and  not canTake(piece, pos, loc, board):
 		print "Cannot take your own piece"
+	elif piece in taken:
+		print "Piece has been taken"
+		return False
 	#'must be out of check condition'
 	#pawn rules, still needs 'enpasson', can be coded in 'can take condition'
 	elif isNumber(p[1]):
 		if((pos[1]-loc[piece][1] != 0) and not canTake()):
 			return False
-		elif((abs(pos[0]-loc[piece][0]) == 2) and (loc[piece][0] != 2 and loc[piece][0] != 7)):
+		elif((abs(pos[0]-loc[piece][0]) == 2) and (loc[piece][0] != 2 and 
+		loc[piece][0] != 7)):
 			return False
 		elif p[0] == "W":
 			if(((pos[0]-loc[piece][0]) > 2) or (pos[0]-loc[piece][0])< 0 ):
@@ -104,6 +118,12 @@ def isLegal(piece, pos, loc, board):
 		else:
 			return True
 	#queen rules
+	elif p[1] == "Q":
+		
+		if(not(pos[1]-loc[piece][1] == 0 or  pos[0]-loc[piece][0] ==0) and ( abs(pos[0]-loc[piece][0]) != abs(pos[1]-loc[piece][1]))):
+			return False
+		else:
+			return True
 	#bishop rules
 	#knight rules
 	#rook rules
@@ -150,7 +170,7 @@ def getMove(loc, board):
 	
 b = createBoard()
 d = initLoc(b)
-taken = ["W3"]
+taken = []
 print d["W8"]
 
 while True:
