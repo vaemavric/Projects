@@ -73,17 +73,80 @@ def isNumber(s):
 def canTake(piece, pos, loc, board):
 #cantTake(Piece, pos, loc, board) tests whether a piece can take the piece in the new locations
 	if(piece[0] == board[pos[0]][pos[1]][0]):
+		print "Can't take"
 		return False
 	else:
+		print " Can take"
 		return True
+def isBlocked(piece, pos, loc, board):
+	hor = abs(pos[0]-loc[piece][0])
+	ver = abs(pos[1]-loc[piece][1])
+	blocked = False
+	#Vertical check
+	if((pos[0]-loc[piece][0]) ==0):
+		for x in range (1, ver):
+			if (pos[1]-loc[piece][1] <0):
+				if board[loc[piece][0]][loc[piece][1] - x] != "  ":
+					print "Blocked by"+ board[loc[piece][0]][loc[piece][1] - x]
+					blocked =  True
+			elif(pos[1]-loc[piece][1] >0):
+				if board[loc[piece][0]][loc[piece][1] + x] != "  ":
+					print "Bloced by"+ board[loc[piece][0]][loc[piece][1] + x]
+					blocked =  True
+			else:
+				blocked = False
+		
+	#Horizontal check
+	if((pos[1]-loc[piece][1]) ==0):
+		for x in range (1, hor):
+			if (pos[0]-loc[piece][0] <0):
+				if board[loc[piece][0] - x][loc[piece][1]] != "  ":
+					print "Blocked by"+ board[loc[piece][0] - x][loc[piece][1]]
+					blocked =  True
+			elif(pos[0]-loc[piece][0] >0):
+				if board[loc[piece][0] + x][loc[piece][1]] != "  ":
+					print "Blocked by" +board[loc[piece][0] + x][loc[piece][1]]
+					blocked =  True
+			else:
+				blocked = False
+		
+	#Diagonal check
+	else:
+		for x in range (1, ver):
+			if(pos[0]-loc[piece][0] <0):
+				if (pos[1]-loc[piece][1] <0):
+					if board[loc[piece][0]-x][loc[piece][1] - x] != "  ":
+						print "Blocked by"+ board[loc[piece][0]-x][loc[piece][1] - x]
+						blocked =  True
+				if (pos[1]-loc[piece][1] >0):
+					if board[loc[piece][0]+x][loc[piece][1] + x] != "  ":
+						print "Blocked by"+ board[loc[piece][0]+x][loc[piece][1] + x]
+						blocked =  True
+			else:
+				if (pos[1]-loc[piece][1] <0):
+					if board[loc[piece][0]-x][loc[piece][1] - x] != "  ":
+						print "Blocked by"+ board[loc[piece][0]-x][loc[piece][1] - x]
+						blocked =  True
+				if (pos[1]-loc[piece][1] >0):
+					if board[loc[piece][0]+x][loc[piece][1] + x] != "  ":
+						print "Blocked by"+ board[loc[piece][0]+x][loc[piece][1] + x]
+						blocked =  True
+				
+	if blocked:
+		return True
+	else:
+		return False
 		
 def isLegal(piece, pos, loc, board):
 	p = list(piece)
+	#check to see if move is actually a move
 	if pos == loc[piece]:
 		print "Piece already in that position"
 		return False
+	#checks to see if piece can move to that position 
 	elif board[pos[0]][pos[1]] != "  " and  not canTake(piece, pos, loc, board):
 		print "Cannot take your own piece"
+	#checks to see if piece is taken
 	elif piece in taken:
 		print "Piece has been taken"
 		return False
@@ -106,36 +169,41 @@ def isLegal(piece, pos, loc, board):
 				return True		
 	#king rules # needs new position is not check test and castle king
 	elif p[1] == "K":
-		print "king"
 		if(abs(pos[0]-loc[piece][0]) !=1):
-			print (abs(pos[0]-loc[piece][0]))
+			print "King cannot do that move"
 			return False
 		else:
 			return True
+	#knight rules
+	elif p[1].lower() == "n":
+		if (((abs(pos[0]-loc[piece][0]) == 2) and abs(pos[1]-loc[piece][1]) ==1) or ((abs(pos[1]-loc[piece][1]) == 2) and 
+		abs(pos[0]-loc[piece][0]) ==1)):
+			return True
+		else:
+			print " Knight cannot do that move"
+			return False
+	#blocked condition
+	elif(isBlocked(piece, pos, loc, board)):
+		return False
 	#queen rules
 	elif p[1] == "Q":
 		if(not(pos[1]-loc[piece][1] == 0 or  pos[0]-loc[piece][0] ==0) and (abs(pos[0]-loc[piece][0]) != 
 		abs(pos[1]-loc[piece][1]))):
+			print "Queen cannot do that move"
 			return False
 		else:
 			return True
 	#bishop rules
 	elif p[1].lower() == "b":
 		if(abs(pos[0]-loc[piece][0]) != abs(pos[1]-loc[piece][1])):
+			print "Bishop cannot do that move"
 			return False
 		else:
 			return True
-	#knight rules
-	elif p[1].lower() == "n":
-		print "this is a knight"
-		if (((abs(pos[0]-loc[piece][0]) == 2) and abs(pos[1]-loc[piece][1]) ==1) or ((abs(pos[1]-loc[piece][1]) == 2) and 
-		abs(pos[0]-loc[piece][0]) ==1)):
-			return True
-		else:
-			return False
 	#rook rules
 	elif p[1].lower() == "r":
 		if not(pos[1]-loc[piece][1] == 0 or  pos[0]-loc[piece][0] ==0):
+			print "Rook cannot do that move"
 			return False
 		else:
 			return True
@@ -180,7 +248,6 @@ def getMove(loc, board):
 b = createBoard()
 d = initLoc(b)
 taken = []
-print d["W8"]
 
 while True:
 #While loop.
