@@ -1,12 +1,12 @@
 #=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-# chess.py                                                        	           #
-# a python script to play chess on the command line.						   #
-# The intention of this code is create a script that can play chess.	       #
-# 														                       #
-# date: 16/03/2016                                                             #
-# author: vaemavric                                                            #
-# site: github.com/vaemavric/projects    			                           #
-# written in notepad++                                                         #
+# chess.py#
+# a python script to play chess on the command line.#
+# The intention of this code is create a script that can play chess.#
+##
+# date: 16/03/2016#
+# author: vaemavric#
+# site: github.com/vaemavric/projects#
+# written in notepad++#
 #=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 turn = 0
 def createBoard():
