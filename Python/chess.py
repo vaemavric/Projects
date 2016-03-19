@@ -1,17 +1,16 @@
-#=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-# chess.py#
-# a python script to play chess on the command line.#
-# The intention of this code is create a script that can play chess.#
-##
-# date: 16/03/2016#
-# author: vaemavric#
-# site: github.com/vaemavric/projects#
-# written in notepad++#
-#=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
+#                                                       chess.py                                                               #
+#                                    python script to play chess on the command line.                                          #
+#                            The intention of this code is create a script that can play chess.                                #
+#                                                                                                                              #
+#                                                   date:16/03/2016                                                            #
+#                                                  author: vaemavric                                                           #
+#                                         site: github.com/vaemavric/projects                                                  #
+#                                                 written in notepad++                                                         #
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 turn = 0
 def createBoard():
-# createBoard() creates an 9x9 grid in the starting position of chess with labels on grid.
-#white at top, black at bottom.
+# createBoard() creates an 9x9 grid in the starting position of chess with labels on grid. white at top, black at bottom.
 	board = [[0 for x in range(9)]for x in range(9)]
 	d= {}
 	for x in range(9):
@@ -37,9 +36,8 @@ def createBoard():
 	return board
 
 def initLoc(board):
-#currentLoc(b) takes the board and creates a dictionary.
-#b is the array describing the board, The keys are the
-# pieces and each value is an array containing the position of the piece.
+#currentLoc(b) takes the board and creates a dictionary. b is the array describing the board, The keys are the pieces and 
+#each value is an array containing the position of the piece.
 	dic	= {}
 	for x in range (8):
 		for y in range (8):
@@ -48,8 +46,7 @@ def initLoc(board):
 	return dic
 
 def printBoard(board):
-#printBoard(board) prints the board in its current state.
-#b is the array describing the board
+#printBoard(board) prints the board in its current state. b is the array describing the board
 	for x in range(9):
 		print board[x]
 		print "\n"
@@ -74,8 +71,7 @@ def isNumber(s):
 	except ValueError:
 		return False
 def canTake(piece, pos, loc, board):
-#cantTake(Piece, pos, loc, board) tests whether a piece can take the piece in 
-#the new locations
+#cantTake(Piece, pos, loc, board) tests whether a piece can take the piece in the new locations
 	if(piece[0] == board[pos[0]][pos[1]][0]):
 		return False
 	else:
@@ -96,8 +92,7 @@ def isLegal(piece, pos, loc, board):
 	elif isNumber(p[1]):
 		if((pos[1]-loc[piece][1] != 0) and not canTake()):
 			return False
-		elif((abs(pos[0]-loc[piece][0]) == 2) and (loc[piece][0] != 2 and 
-		loc[piece][0] != 7)):
+		elif((abs(pos[0]-loc[piece][0]) == 2) and (loc[piece][0] != 2 and loc[piece][0] != 7)):
 			return False
 		elif p[0] == "W":
 			if(((pos[0]-loc[piece][0]) > 2) or (pos[0]-loc[piece][0])< 0 ):
@@ -120,7 +115,8 @@ def isLegal(piece, pos, loc, board):
 	#queen rules
 	elif p[1] == "Q":
 		
-		if(not(pos[1]-loc[piece][1] == 0 or  pos[0]-loc[piece][0] ==0) and ( abs(pos[0]-loc[piece][0]) != abs(pos[1]-loc[piece][1]))):
+		if(not(pos[1]-loc[piece][1] == 0 or  pos[0]-loc[piece][0] ==0) and ( abs(pos[0]-loc[piece][0]) != 
+		abs(pos[1]-loc[piece][1]))):
 			return False
 		else:
 			return True
@@ -132,12 +128,9 @@ def isLegal(piece, pos, loc, board):
 		return True
 	
 def doMove(piece, pos, loc, board):
-#doMove(m, d) moves a piece based on user input in algebraic chess
-#notation. Checks to see if move is legal using method isLegal()
-# m is the users move
-# loc is the dictionary of current piece location
-# updates 'd' the dictionary with current positions to the new positions
-# updates the board to reflect the new positions
+#doMove(m, d) moves a piece based on user input in algebraic chess notation. Checks to see if move is legal using method 
+#isLegal(). m is the users move, loc is the dictionary of current piece location, updates 'd' the dictionary with current
+#positions to the new positions updates the board to reflect the new positions
 	try:
 		if isLegal(piece, pos, loc, board):
 			#puts piece in new position on the board array
