@@ -119,12 +119,12 @@ def isBlocked(piece, pos, loc, board):
 						print "Blocked by"+ board[loc[piece][0]-x][loc[piece][1] - x]
 						blocked =  True
 				if (pos[1]-loc[piece][1] >0):
-					if board[loc[piece][0]+x][loc[piece][1] + x] != "  ":
+					if board[loc[piece][0]-x][loc[piece][1] + x] != "  ":
 						print "Blocked by"+ board[loc[piece][0]+x][loc[piece][1] + x]
 						blocked =  True
 			else:
 				if (pos[1]-loc[piece][1] <0):
-					if board[loc[piece][0]-x][loc[piece][1] - x] != "  ":
+					if board[loc[piece][0]+x][loc[piece][1] - x] != "  ":
 						print "Blocked by"+ board[loc[piece][0]-x][loc[piece][1] - x]
 						blocked =  True
 				if (pos[1]-loc[piece][1] >0):
