@@ -75,6 +75,9 @@ def canTake(piece, pos, loc, board):
 	if(piece[0] == board[pos[0]][pos[1]][0]):
 		print "Can't take"
 		return False
+	elif(board[pos[0]][pos[1]][1]=="K"):
+		print "Can't take King"
+		return False
 	else:
 		print " Can take"
 		return True
@@ -136,7 +139,8 @@ def isBlocked(piece, pos, loc, board):
 		return True
 	else:
 		return False
-		
+def inCheck(loc, board):		
+
 def isLegal(piece, pos, loc, board):
 	p = list(piece)
 	#check to see if move is actually a move
