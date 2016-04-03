@@ -84,34 +84,33 @@ def canTake(piece, pos, loc, board):
 def isBlocked(piece, pos, loc, board):
 	hor = abs(pos[0]-loc[piece][0])
 	ver = abs(pos[1]-loc[piece][1])
-	blocked = False
 	#Vertical check
 	if((pos[0]-loc[piece][0]) ==0):
 		for x in range (1, ver):
 			if (pos[1]-loc[piece][1] <0):
 				if board[loc[piece][0]][loc[piece][1] - x] != "  ":
-					print "Blocked by"+ board[loc[piece][0]][loc[piece][1] - x]
-					blocked =  True
+					print "Blocked by "+ board[loc[piece][0]][loc[piece][1] - x]
+					return True
 			elif(pos[1]-loc[piece][1] >0):
 				if board[loc[piece][0]][loc[piece][1] + x] != "  ":
-					print "Bloced by"+ board[loc[piece][0]][loc[piece][1] + x]
-					blocked =  True
+					print "Bloced by "+ board[loc[piece][0]][loc[piece][1] + x]
+					return True
 			else:
-				blocked = False
+				return False
 		
 	#Horizontal check
 	if((pos[1]-loc[piece][1]) ==0):
 		for x in range (1, hor):
 			if (pos[0]-loc[piece][0] <0):
 				if board[loc[piece][0] - x][loc[piece][1]] != "  ":
-					print "Blocked by"+ board[loc[piece][0] - x][loc[piece][1]]
-					blocked =  True
+					print "Blocked by "+ board[loc[piece][0] - x][loc[piece][1]]
+					return True
 			elif(pos[0]-loc[piece][0] >0):
 				if board[loc[piece][0] + x][loc[piece][1]] != "  ":
-					print "Blocked by" +board[loc[piece][0] + x][loc[piece][1]]
-					blocked =  True
+					print "Blocked by " +board[loc[piece][0] + x][loc[piece][1]]
+					return True
 			else:
-				blocked = False
+				return False
 		
 	#Diagonal check
 	else:
@@ -119,27 +118,63 @@ def isBlocked(piece, pos, loc, board):
 			if(pos[0]-loc[piece][0] <0):
 				if (pos[1]-loc[piece][1] <0):
 					if board[loc[piece][0]-x][loc[piece][1] - x] != "  ":
-						print "Blocked by"+ board[loc[piece][0]-x][loc[piece][1] - x]
+						print "Blocked by "+ board[loc[piece][0]-x][loc[piece][1] - x]
 						blocked =  True
-				if (pos[1]-loc[piece][1] >0):
+				elif (pos[1]-loc[piece][1] >0):
 					if board[loc[piece][0]-x][loc[piece][1] + x] != "  ":
-						print "Blocked by"+ board[loc[piece][0]+x][loc[piece][1] + x]
-						blocked =  True
+						print "Blocked by "+ board[loc[piece][0]+x][loc[piece][1] + x]
+						return True
+				else:
+					return False
 			else:
 				if (pos[1]-loc[piece][1] <0):
 					if board[loc[piece][0]+x][loc[piece][1] - x] != "  ":
-						print "Blocked by"+ board[loc[piece][0]-x][loc[piece][1] - x]
-						blocked =  True
-				if (pos[1]-loc[piece][1] >0):
+						print "Blocked by "+ board[loc[piece][0]-x][loc[piece][1] - x]
+						return True
+				elif (pos[1]-loc[piece][1] >0):
 					if board[loc[piece][0]+x][loc[piece][1] + x] != "  ":
-						print "Blocked by"+ board[loc[piece][0]+x][loc[piece][1] + x]
-						blocked =  True
-				
-	if blocked:
-		return True
-	else:
-		return False
-def inCheck(loc, board):		
+						print "Blocked by "+ board[loc[piece][0]+x][loc[piece][1] + x]
+						return True
+				else:
+					return False
+def inCheck(loc, board):
+	W = loc["WK"]
+	B = loc["BK"]
+	#white
+	#vertical check
+	#veritcal down
+	#for x in range (1, 9-W[0]):
+		#print board[W[0]+x][W[1]]
+	#vertical up
+	#for x in range (1, W[0]):
+		#print board[W[0]-x][W[1]]
+	#horizontal check
+	#horizontal right
+	#for x in range (1, 9-W[1]):
+		#print board[W[0]][W[1]+x]
+	#horizontal left
+	#for x in range (1, W[1]):
+		#print board[W[0]][W[1]-x]
+	#diagonal check
+	#knight check
+	
+	#black
+	#vertical check
+	#veritcal down
+	#for x in range (1, 9-B[0]):
+		#print board[B[0]+x][B[1]]
+	#vertical up
+	#for x in range (1, B[0]):
+		#print board[B[0]-x][B[1]]
+	#horizontal check
+	#horizontal right
+	#for x in range (1, 9-B[1]):
+		#print board[B[0]][B[1]+x]
+	#horizontal left
+	#for x in range (1, B[1]):
+		#print board[B[0]][B[1]-x]
+	#diagonal check
+	#knight check
 
 def isLegal(piece, pos, loc, board):
 	p = list(piece)
@@ -247,6 +282,7 @@ def getMove(loc, board):
 	else:
 		piece = "B" +a[0]
 	pos= [int(a[3]),ord(a[2])-96]
+	inCheck(loc, board)
 	doMove(piece, pos, loc, board)
 	
 b = createBoard()
@@ -255,10 +291,10 @@ taken = []
 
 while True:
 #While loop.
-	try:
+	#try:
 		printBoard(b)
 		getMove(d, b)
 		nextTurn()
-	except:
-		print"Quiting chess"
-		quit()
+	#except:
+	#	print"Quiting chess"
+	#	quit()
