@@ -137,42 +137,42 @@ def isBlocked(piece, pos, loc, board):
 						return True
 				else:
 					return False
-def inCheck(loc, board):
-	W = loc["WK"]
-	B = loc["BK"]
-	#white
+def inCheck(loc, board, colour):
+	#You need to move the diagonal check out of the loop, this idea is theoretically nice,
+	#but in practice is stupid
+	piece = colour + "K"
+	P = loc[piece]
 	#vertical check
 	#veritcal down
-	#for x in range (1, 9-W[0]):
-		#print board[W[0]+x][W[1]]
+	for x in range (1, 9-P[0]):
+		#print board[P[0]+x][P[1]]
+		for y in range (1, 9-P[1]):
+			#print board[P[0]][P[1]+y]
+			if y <= x:
+				print board[P[0]+y][P[1]+y]
+		for y in range (1, P[1]):
+			#print board[P[0]][P[1]-y]
+			if y <= x:
+				print board[P[0+y]][P[1]-y]
 	#vertical up
-	#for x in range (1, W[0]):
-		#print board[W[0]-x][W[1]]
+	for x in range (1, P[0]):
+		#print board[P[0]-x][P[1]]
+		for y in range (1, 9-P[1]):
+			#print board[P[0]][P[1]+y]
+			if y <= x:
+				print board[P[0]-y][P[1]+y]
+		for y in range (1, P[1]):
+			#print board[P[0]][P[1]-y]
+			if y <= x:
+				print board[P[0]-y][P[1]-y]
+		
 	#horizontal check
 	#horizontal right
-	#for x in range (1, 9-W[1]):
-		#print board[W[0]][W[1]+x]
+	#for x in range (1, 9-P[1]):
+		#print board[P[0]][P[1]+x]
 	#horizontal left
-	#for x in range (1, W[1]):
-		#print board[W[0]][W[1]-x]
-	#diagonal check
-	#knight check
-	
-	#black
-	#vertical check
-	#veritcal down
-	#for x in range (1, 9-B[0]):
-		#print board[B[0]+x][B[1]]
-	#vertical up
-	#for x in range (1, B[0]):
-		#print board[B[0]-x][B[1]]
-	#horizontal check
-	#horizontal right
-	#for x in range (1, 9-B[1]):
-		#print board[B[0]][B[1]+x]
-	#horizontal left
-	#for x in range (1, B[1]):
-		#print board[B[0]][B[1]-x]
+	#for x in range (1, P[1]):
+		#print board[P[0]][P[1]-x]
 	#diagonal check
 	#knight check
 
@@ -282,7 +282,7 @@ def getMove(loc, board):
 	else:
 		piece = "B" +a[0]
 	pos= [int(a[3]),ord(a[2])-96]
-	inCheck(loc, board)
+	inCheck(loc, board, "B")
 	doMove(piece, pos, loc, board)
 	
 b = createBoard()
