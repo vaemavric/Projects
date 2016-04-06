@@ -142,31 +142,31 @@ def inCheck(loc, board, pos):
 	P = pos
 	#vertical check
 	#veritcal down
-	#for x in range (1, 9-P[0]):
-	#	print board[P[0]+x][P[1]]
+	for x in range (1, 9-P[0]):
+		print board[P[0]+x][P[1]]
 	#vertical up
-	#for x in range (1, P[0]):
-	#	print board[P[0]-x][P[1]]
+	for x in range (1, P[0]):
+		print board[P[0]-x][P[1]]
 	#horizontal check
 	#horizontal right
-	#for x in range (1, 9-P[1]):
-	#	print board[P[0]][P[1]+x]
+	for x in range (1, 9-P[1]):
+		print board[P[0]][P[1]+x]
 	#horizontal left
-	#for x in range (1, P[1]):
-	#	print board[P[0]][P[1]-x]
+	for x in range (1, P[1]):
+		print board[P[0]][P[1]-x]
 	#diagonal check
 	UR = min(P[0], 9-P[1])
 	UL = min(P[0], P[1])
 	DR = min(9-P[0], 9-P[1])
 	DL = min(9-P[0], P[1])
-	#for x in range (1, UR):
-	#	print board[P[0]-x][P[1]+x]
-	#for x in range (1, UL):
-	#	print board[P[0]-x][P[1]-x]
-	#for x in range (1, DR):
-	#	print board[P[0]+x][P[1]+x]
-	#for x in range (1, DL):
-	#	print board[P[0]+x][P[1]-x]
+	for x in range (1, UR):
+		print board[P[0]-x][P[1]+x]
+	for x in range (1, UL):
+		print board[P[0]-x][P[1]-x]
+	for x in range (1, DR):
+		print board[P[0]+x][P[1]+x]
+	for x in range (1, DL):
+		print board[P[0]+x][P[1]-x]
 	#knight check
 	if (0<P[0]+2<9 and 0<P[1]+1<9):
 		print board[P[0]+2][P[1]+1]
