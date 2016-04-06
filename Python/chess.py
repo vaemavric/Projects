@@ -138,8 +138,7 @@ def isBlocked(piece, pos, loc, board):
 				else:
 					return False
 def inCheck(loc, board, pos):
-	#Need to check knight code, current loops over the other end of the board for
-	#white king, but causes error for black king. simple '<' test needed.
+	#Need to change the code so it returns whether the position it in check
 	P = pos
 	#vertical check
 	#veritcal down
@@ -169,14 +168,22 @@ def inCheck(loc, board, pos):
 	#for x in range (1, DL):
 	#	print board[P[0]+x][P[1]-x]
 	#knight check
-	print board[P[0]+2][P[1]+1]
-	print board[P[0]+2][P[1]-1]
-	print board[P[0]-2][P[1]+1]
-	print board[P[0]-2][P[1]-1]
-	print board[P[0]+1][P[1]+2]
-	print board[P[0]+1][P[1]-2]
-	print board[P[0]-1][P[1]+2]
-	print board[P[0]-1][P[1]-2]
+	if (0<P[0]+2<9 and 0<P[1]+1<9):
+		print board[P[0]+2][P[1]+1]
+	if (0<P[0]+2<9 and 0<P[1]-1<9):
+		print board[P[0]+2][P[1]-1]
+	if (0<P[0]-2<9 and 0<P[1]+1<9):
+		print board[P[0]-2][P[1]+1]
+	if (0<P[0]-2<9 and 0<P[1]-1<9):
+		print board[P[0]-2][P[1]-1]
+	if (0<P[0]+1<9 and 0<P[1]+2<9):
+		print board[P[0]+1][P[1]+2]
+	if (0<P[0]+1<9 and 0<P[1]-2<9):
+		print board[P[0]+1][P[1]-2]
+	if (0<P[0]-1<9 and 0<P[1]+2<9):
+		print board[P[0]-1][P[1]+2]
+	if (0<P[0]-1<9 and 0<P[1]-2<9):
+		print board[P[0]-1][P[1]-2]
 
 def isLegal(piece, pos, loc, board):
 	p = list(piece)
