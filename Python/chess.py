@@ -137,44 +137,46 @@ def isBlocked(piece, pos, loc, board):
 						return True
 				else:
 					return False
-def inCheck(loc, board, colour):
-	#You need to move the diagonal check out of the loop, this idea is theoretically nice,
-	#but in practice is stupid
-	piece = colour + "K"
-	P = loc[piece]
+def inCheck(loc, board, pos):
+	#Need to check knight code, current loops over the other end of the board for
+	#white king, but causes error for black king. simple '<' test needed.
+	P = pos
 	#vertical check
 	#veritcal down
-	for x in range (1, 9-P[0]):
-		#print board[P[0]+x][P[1]]
-		for y in range (1, 9-P[1]):
-			#print board[P[0]][P[1]+y]
-			if y <= x:
-				print board[P[0]+y][P[1]+y]
-		for y in range (1, P[1]):
-			#print board[P[0]][P[1]-y]
-			if y <= x:
-				print board[P[0+y]][P[1]-y]
+	#for x in range (1, 9-P[0]):
+	#	print board[P[0]+x][P[1]]
 	#vertical up
-	for x in range (1, P[0]):
-		#print board[P[0]-x][P[1]]
-		for y in range (1, 9-P[1]):
-			#print board[P[0]][P[1]+y]
-			if y <= x:
-				print board[P[0]-y][P[1]+y]
-		for y in range (1, P[1]):
-			#print board[P[0]][P[1]-y]
-			if y <= x:
-				print board[P[0]-y][P[1]-y]
-		
+	#for x in range (1, P[0]):
+	#	print board[P[0]-x][P[1]]
 	#horizontal check
 	#horizontal right
 	#for x in range (1, 9-P[1]):
-		#print board[P[0]][P[1]+x]
+	#	print board[P[0]][P[1]+x]
 	#horizontal left
 	#for x in range (1, P[1]):
-		#print board[P[0]][P[1]-x]
+	#	print board[P[0]][P[1]-x]
 	#diagonal check
+	UR = min(P[0], 9-P[1])
+	UL = min(P[0], P[1])
+	DR = min(9-P[0], 9-P[1])
+	DL = min(9-P[0], P[1])
+	#for x in range (1, UR):
+	#	print board[P[0]-x][P[1]+x]
+	#for x in range (1, UL):
+	#	print board[P[0]-x][P[1]-x]
+	#for x in range (1, DR):
+	#	print board[P[0]+x][P[1]+x]
+	#for x in range (1, DL):
+	#	print board[P[0]+x][P[1]-x]
 	#knight check
+	print board[P[0]+2][P[1]+1]
+	print board[P[0]+2][P[1]-1]
+	print board[P[0]-2][P[1]+1]
+	print board[P[0]-2][P[1]-1]
+	print board[P[0]+1][P[1]+2]
+	print board[P[0]+1][P[1]-2]
+	print board[P[0]-1][P[1]+2]
+	print board[P[0]-1][P[1]-2]
 
 def isLegal(piece, pos, loc, board):
 	p = list(piece)
@@ -282,7 +284,8 @@ def getMove(loc, board):
 	else:
 		piece = "B" +a[0]
 	pos= [int(a[3]),ord(a[2])-96]
-	inCheck(loc, board, "B")
+	B = loc["WK"]
+	inCheck(loc, board, B)
 	doMove(piece, pos, loc, board)
 	
 b = createBoard()
