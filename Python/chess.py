@@ -139,6 +139,8 @@ def isBlocked(piece, pos, loc, board):
 					return False
 def inCheck(loc, board, pos):
 	#Need to change the code so it returns whether the position it in check
+	#Best achieved by returning the first non zero piece and seeing if its a
+	#piece that could cause check from that postion
 	P = pos
 	#vertical check
 	#veritcal down
