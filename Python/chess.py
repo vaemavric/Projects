@@ -142,20 +142,66 @@ def inCheck(loc, board, pos):
 	#Best achieved by returning the first non zero piece and seeing if its a
 	#piece that could cause check from that postion
 	P = pos
+	check = False
 	#vertical check
 	#veritcal down
 	for x in range (1, 9-P[0]):
-		print board[P[0]+x][P[1]]
+		if board[P[0]+x][P[1]] == "  ":
+			pass
+		elif turn%2 == 0 :
+			if board[P[0]+x][P[1]][0] == "W":
+				break
+			else:
+				print board[P[0]+x][P[1]]
+		else:
+			if board[P[0]+x][P[1]][0] == "B":
+				break
+			else:
+				print board[P[0]+x][P[1]]
 	#vertical up
 	for x in range (1, P[0]):
-		print board[P[0]-x][P[1]]
+		if board[P[0]-x][P[1]] == "  ":
+			pass
+		elif turn%2==0:
+			if board[P[0]-x][P[1]][0] == "W":
+				break
+			else:
+				print board[P[0]-x][P[1]]
+		else:
+			if board[P[0]-x][P[1]][0] == "B":
+				break
+			else:
+				print board[P[0]-x][P[1]]
+					
 	#horizontal check
 	#horizontal right
 	for x in range (1, 9-P[1]):
-		print board[P[0]][P[1]+x]
+		if board[P[0]][P[1]+x] == "  ":
+			pass
+		elif turn%2==0:
+			if board[P[0]][P[1]+x][0] == "W":
+				break
+			else:
+				print board[P[0]][P[1]+x]
+		else:
+			if board[P[0]][P[1]+x][0] == "B":
+				break
+			else:
+				print board[P[0]][P[1]+x]
 	#horizontal left
 	for x in range (1, P[1]):
-		print board[P[0]][P[1]-x]
+		if board[P[0]][P[1]-x] == "  ":
+			pass
+		elif turn%2==0:
+			if board[P[0]][P[1]-x] == "W":
+				break
+			else:
+				print board[P[0]][P[1]-x]
+		else:
+			if board[P[0]][P[1]-x] == "B":
+				break
+			else:
+				print board[P[0]][P[1]-x]
 	#diagonal check
 	UR = min(P[0], 9-P[1])
 	UL = min(P[0], P[1])
