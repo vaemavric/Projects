@@ -193,12 +193,12 @@ def inCheck(loc, board, pos):
 		if board[P[0]][P[1]-x] == "  ":
 			pass
 		elif turn%2==0:
-			if board[P[0]][P[1]-x] == "W":
+			if board[P[0]][P[1]-x][0] == "W":
 				break
 			else:
 				print board[P[0]][P[1]-x]
 		else:
-			if board[P[0]][P[1]-x] == "B":
+			if board[P[0]][P[1]-x][0] == "B":
 				break
 			else:
 				print board[P[0]][P[1]-x]
@@ -208,30 +208,164 @@ def inCheck(loc, board, pos):
 	DR = min(9-P[0], 9-P[1])
 	DL = min(9-P[0], P[1])
 	for x in range (1, UR):
-		print board[P[0]-x][P[1]+x]
+		if board[P[0]-x][P[1]+x] == "  ":
+			pass
+		elif turn%2==0:
+			if board[P[0]-x][P[1]+x][0] == "W":
+				break
+			else:
+				print board[P[0]-x][P[1]+x]
+		else:
+			if board[P[0]-x][P[1]+x][0] == "B":
+				break
+			else:
+				print board[P[0]-x][P[1]+x]
 	for x in range (1, UL):
-		print board[P[0]-x][P[1]-x]
+		if board[P[0]-x][P[1]-x] == "  ":
+			pass
+		elif turn%2==0:
+			if board[P[0]-x][P[1]-x][0] == "W":
+				break
+			else:
+				print board[P[0]-x][P[1]-x]
+		else:
+			if board[P[0]-x][P[1]-x][0] == "B":
+				break
+			else:
+				print board[P[0]-x][P[1]-x]
 	for x in range (1, DR):
-		print board[P[0]+x][P[1]+x]
+		if board[P[0]+x][P[1]+x] == "  ":
+			pass
+		elif turn%2==0:
+			if board[P[0]+x][P[1]+x][0] == "W":
+				break
+			else:
+				print board[P[0]+x][P[1]+x]
+		else:
+			if board[P[0]+x][P[1]+x][0] == "B":
+				break
+			else:
+				print board[P[0]+x][P[1]+x]
 	for x in range (1, DL):
-		print board[P[0]+x][P[1]-x]
+		if board[P[0]+x][P[1]-x] == "  ":
+			pass
+		elif turn%2==0:
+			if board[P[0]+x][P[1]-x][0] == "W":
+				break
+			else:
+				print board[P[0]+x][P[1]-x]
+		else:
+			if board[P[0]+x][P[1]-x][0] == "B":
+				break
+			else:
+				print board[P[0]+x][P[1]-x]
 	#knight check
 	if (0<P[0]+2<9 and 0<P[1]+1<9):
-		print board[P[0]+2][P[1]+1]
+		if board[P[0]+2][P[1]+1] == "  ":
+			pass
+		if turn%2 == 0:
+			if board[P[0]+2][P[1]+1][0] == "W":
+				pass
+			else:
+				print board[P[0]+2][P[1]+1]
+		else:
+			if board[P[0]+2][P[1]+1][0] == "B":
+				pass
+			else:
+				print board[P[0]+2][P[1]+1]
 	if (0<P[0]+2<9 and 0<P[1]-1<9):
-		print board[P[0]+2][P[1]-1]
+		if board[P[0]+2][P[1]-1] == "  ":
+			pass
+		if turn%2 == 0:
+			if board[P[0]+2][P[1]-1][0] == "W":
+				pass
+			else:
+				print board[P[0]+2][P[1]-1]
+		else:
+			if board[P[0]+2][P[1]-1][0] == "B":
+				pass
+			else:
+				print board[P[0]+2][P[1]-1]
 	if (0<P[0]-2<9 and 0<P[1]+1<9):
-		print board[P[0]-2][P[1]+1]
+		if board[P[0]-2][P[1]+1] == "  ":
+			pass
+		if turn%2 == 0:
+			if board[P[0]-2][P[1]+1][0] == "W":
+				pass
+			else:
+				print board[P[0]-2][P[1]+1]
+		else:
+			if board[P[0]-2][P[1]+1][0] == "B":
+				pass
+			else:
+				print board[P[0]-2][P[1]+1]
 	if (0<P[0]-2<9 and 0<P[1]-1<9):
-		print board[P[0]-2][P[1]-1]
+		if board[P[0]-2][P[1]-1] == "  ":
+			pass
+		if turn%2 == 0:
+			if board[P[0]-2][P[1]-1][0] == "W":
+				pass
+			else:
+				print board[P[0]-2][P[1]-1]
+		else:
+			if board[P[0]-2][P[1]-1][0] == "B":
+				pass
+			else:
+				print board[P[0]-2][P[1]-1]
 	if (0<P[0]+1<9 and 0<P[1]+2<9):
-		print board[P[0]+1][P[1]+2]
+		if board[P[0]+1][P[1]+2] == "  ":
+			pass
+		if turn%2 == 0:
+			if board[P[0]+1][P[1]+2][0] == "W":
+				pass
+			else:
+				print board[P[0]+1][P[1]+2]
+		else:
+			if board[P[0]+1][P[1]+2][0] == "B":
+				pass
+			else:
+				print board[P[0]+1][P[1]+2]
 	if (0<P[0]+1<9 and 0<P[1]-2<9):
-		print board[P[0]+1][P[1]-2]
+		if board[P[0]+1][P[1]-2] == "  ":
+			pass
+		if turn%2 == 0:
+			if board[P[0]+1][P[1]-2][0] == "W":
+				pass
+			else:
+				print board[P[0]+1][P[1]-2]
+		else:
+			if board[P[0]+1][P[1]-2][0] == "B":
+				pass
+			else:
+				print board[P[0]+1][P[1]-2]
 	if (0<P[0]-1<9 and 0<P[1]+2<9):
 		print board[P[0]-1][P[1]+2]
+		
+		if board[P[0]-1][P[1]+2] == "  ":
+			pass
+		if turn%2 == 0:
+			if board[P[0]-1][P[1]+2][0] == "W":
+				pass
+			else:
+				print board[P[0]-1][P[1]+2]
+		else:
+			if board[P[0]-1][P[1]+2][0] == "B":
+				pass
+			else:
+				print board[P[0]-1][P[1]+2]
 	if (0<P[0]-1<9 and 0<P[1]-2<9):
-		print board[P[0]-1][P[1]-2]
+		if board[P[0]-1][P[1]-2] == "  ":
+			pass
+		if turn%2 == 0:
+			if board[P[0]-1][P[1]-2][0] == "W":
+				pass
+			else:
+				print board[P[0]-1][P[1]-2]
+		else:
+			if board[P[0]-1][P[1]-2][0] == "B":
+				pass
+			else:
+				print board[P[0]-1][P[1]-2]
 
 def isLegal(piece, pos, loc, board):
 	p = list(piece)
