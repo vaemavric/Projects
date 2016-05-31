@@ -8,6 +8,9 @@
 #                                         site: github.com/vaemavric/projects                                                  #
 #                                                 written in notepad++                                                         #
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
+#board: multidimensional array, board[row][column]
+#loc: dictionary, loc[piece]
+#pos: list, pos=[row,column]
 turn = 0
 def createBoard():
 # createBoard() creates an 9x9 grid in the starting position of chess with labels on grid. white at top, black at bottom.
