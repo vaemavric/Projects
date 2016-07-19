@@ -1,0 +1,160 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      4736,        150]
+NotebookOptionsPosition[      3958,        117]
+NotebookOutlinePosition[      4301,        132]
+CellTagsIndexPosition[      4258,        129]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"For", "[", " ", 
+   RowBox[{
+    RowBox[{"i", " ", "=", " ", "0"}], ",", " ", 
+    RowBox[{"i", "<", "10000000"}], ",", " ", 
+    RowBox[{
+     RowBox[{"i", "++"}], ";", " ", 
+     RowBox[{"a", " ", "=", " ", 
+      RowBox[{"ToString", "[", 
+       RowBox[{"Hash", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"ToString", "[", "i", "]"}], "<>", " ", 
+          "\"\<Time waste!\>\""}], ",", " ", "\"\<SHA256\>\""}], "]"}], 
+       "]"}]}], ";", "  ", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringStartsQ", "[", 
+        RowBox[{"a", ",", " ", "\"\<12344\>\""}], "]"}], ",", " ", 
+       RowBox[{"Print", " ", "[", 
+        RowBox[{
+         RowBox[{"ToString", "[", "i", "]"}], "<>", " ", 
+         "\"\<This is a   test\>\""}], "]"}], ",", " ", "Nothing"}], " ", 
+      "]"}]}]}], "]"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.673864761962475*^9, 3.673864810699688*^9}, {
+   3.6738648776203146`*^9, 3.6738649614321737`*^9}, {3.673864993743943*^9, 
+   3.673865021262714*^9}, {3.673865068468031*^9, 3.6738651648095264`*^9}, {
+   3.6738652240615993`*^9, 3.6738653791789722`*^9}, {3.6738654346833444`*^9, 
+   3.6738654503119984`*^9}, 3.673865487893873*^9, {3.6738658125133896`*^9, 
+   3.6738658821499615`*^9}, {3.6738659197907314`*^9, 
+   3.6738661160155926`*^9}, {3.673866158086401*^9, 3.673866160473194*^9}, {
+   3.6738665010200615`*^9, 3.673866539088149*^9}, {3.6738666218538303`*^9, 
+   3.673866627981064*^9}, {3.673866777137765*^9, 3.673866807922858*^9}, {
+   3.673866868523527*^9, 3.673866872770851*^9}, {3.67386698025543*^9, 
+   3.673867107588872*^9}, {3.673867157656165*^9, 3.673867207970295*^9}, {
+   3.6738672906249638`*^9, 3.6738672907595563`*^9}, {3.673867429630535*^9, 
+   3.6738674810018053`*^9}, {3.6738676297904224`*^9, 3.6738676463769274`*^9}}],
+
+Cell[BoxData["\<\"31743This is a   test\"\>"], "Print",
+ CellChangeTimes->{{3.6738671783913*^9, 3.673867211529935*^9}, 
+   3.673867403123809*^9, 3.6738675736529913`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"\[AliasDelimiter]", 
+   RowBox[{"\[AliasDelimiter]", "\[AliasDelimiter]"}]}]}]], "Input",
+ CellChangeTimes->{{3.6738667582894664`*^9, 3.67386676240345*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ToString", "[", "10", "]"}], "<>", " ", "\"\<asbd\>\""}]], "Input",
+ CellChangeTimes->{{3.673866939913514*^9, 3.6738669468217793`*^9}}],
+
+Cell[BoxData["\<\"10asbd\"\>"], "Output",
+ CellChangeTimes->{3.673866947522605*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Hash", "[", "\"\<test\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6738669581552916`*^9, 3.673866966243059*^9}}],
+
+Cell[BoxData["1526077674433664300"], "Output",
+ CellChangeTimes->{3.673866966555588*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Hash", "[", 
+  RowBox[{"\"\<31743This is a   test\>\"", ",", " ", "\"\<SHA256\>\""}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6738675902736535`*^9, 3.673867611577014*^9}}],
+
+Cell[BoxData[\
+"12344266379940711252135584964263993843614740933053256476177493825273278045536\
+"], "Output",
+ CellChangeTimes->{3.6738676251177163`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["1"], "Input",
+ NumberMarks->False],
+
+Cell[BoxData["1"], "Output",
+ CellChangeTimes->{3.673868186601515*^9}]
+}, Open  ]]
+},
+WindowSize->{1350, 646},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.3 for Microsoft Windows (64-bit) (October 9, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 1869, 38, 92, "Input"],
+Cell[2452, 62, 169, 2, 23, "Print"]
+}, Open  ]],
+Cell[2636, 67, 214, 4, 52, "Input"],
+Cell[CellGroupData[{
+Cell[2875, 75, 170, 3, 31, "Input"],
+Cell[3048, 80, 83, 1, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3168, 86, 136, 2, 31, "Input"],
+Cell[3307, 90, 88, 1, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3432, 96, 197, 4, 31, "Input"],
+Cell[3632, 102, 152, 3, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3821, 110, 48, 1, 31, "Input"],
+Cell[3872, 113, 70, 1, 31, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
