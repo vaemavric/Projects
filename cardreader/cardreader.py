@@ -62,7 +62,7 @@ except:
 	quit()
 	
 
-
+quite =  False
 while True:
 	try:
 		UID =  ser.readline().replace(" ", "").rstrip()
@@ -73,13 +73,13 @@ while True:
 		delete = False
 		reassign = False
 		if kbhit() == 1:
-				key = ord(getch())
-				if key == 100:
-					delete = True
-				elif key == 114:
-					reassign = True
-				else:
-					pass
+			key = ord(getch())
+			if key == 100:
+				delete = True
+			elif key == 114:
+				reassign = True
+			else:
+				pass
 		if cursor.rowcount == 1:
 			cursor.execute(cardq.format(UID))
 			for (Name, Card_Number, DateC, LastL) in cursor:
@@ -89,6 +89,7 @@ while True:
 				cnx.commit()
 			except:
 				cnx.rollback()
+				print("Something went wrong updating student")
 			if delete == True:
 				d = raw_input("are you sure you want to delete? (Y/N) \n")
 				if d.lower() == 'y':
@@ -98,6 +99,7 @@ while True:
 						print("Student deleted")
 					except:
 						cnx.rollback()
+						print("Something went wrong deleting student")
 				else:
 					pass
 			elif reassign == True:
@@ -108,6 +110,7 @@ while True:
 					print("Updated name")
 				except:
 					cnx.rollback()
+					print("Something went wrong updating user")
 			else:
 				pass
 			
@@ -120,9 +123,11 @@ while True:
 				try:
 					cursor.execute(add_student, data_student)
 					cnx.commit()
+					print 'User added'
 				except:
 					cnx.rollback()
-				print 'User added'
+					print("Something went wrong adding new user.")
+				
 			else:
 				pass
 		
@@ -135,11 +140,3 @@ while True:
 		cnx.close()
 		print"Quitting"
 		quit()
-print"Quitting cardreader.py..."
-print"Closing cursor"
-cursor.close()
-cnx.rollback()
-print"Closing Database connection"
-cnx.close()
-print"Quitting"
-quit()
