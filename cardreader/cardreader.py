@@ -28,9 +28,7 @@ except mysql.connector.Error as err:
 		print(err)
 	
 cursor = cnx.cursor()
-#add_student = ("INSERT INTO students " 
-#				"(Name, Card_Number, DateC, LastL) " 
-#				"VALUES (%s, %s, %s, %s)")
+add_student = ("INSERT INTO students (Name, Card_Number, DateC, LastL) VALUES (%s, %s, %s, %s)")
 #data_student = ('James', 'hello', today, tomorrow)
 #cursor.execute(add_student, data_student)
 #cnx.commit()
@@ -54,23 +52,41 @@ for p in ports:
 print " Arduino connected on: " + ard
 ser = serial.Serial(ard)
 
-#while True:
-#	try:
-#		UID =  ser.readline().replace(" ", "")
-#		print "Card read! UID: " + UID
-#		
-#		cursor.execute(cardquery.format(UID))
-#		for (Name, Card_Number, DateC, LastL) in cursor:
-#			print("{}, {} was created on {:%d %b %Y} and last logged in {:%d %b %Y}".format(
-#			Card_Number, Name, DateC, LastL))
-#	except(KeyboardInterrupt, SystemExit):
-#		print"Quitting cardreader.py..."
-#		print"Closing cursor"
-#		cursor.close()
-#		print"Closing Database connection"
-#		cnx.close()
-#		print"Quitting"
-#		quit()
+while True:
+	try:
+		UID =  ser.readline().replace(" ", "").rstrip()
+		print "Card read! UID: " + UID
+		
+		cursor.execute(cardquery.format(UID))
+		cursor.fetchall()
+		if cursor.rowcount == 1:
+			cursor.execute(cardquery.format(UID))
+			for (Name, Card_Number, DateC, LastL) in cursor:
+				print("{}, {} was created on {:%d %b %Y} and last logged in {:%d %b %Y}".format(Card_Number, Name, DateC, LastL))
+				print("\n")
+		else:
+			print "Card not recorded"
+			add = raw_input('Would you like to add new card? (y/n)\n')
+			if add == 'y':
+				name =  raw_input('Enter Name:\n')
+				data_student = (name, UID, today, today)
+				try:
+					cursor.execute(add_student, data_student)
+					cnx.commit()
+				except:
+					cursor.rollback()
+				print 'User added'
+			else:
+				pass
+			print("\n")
+	except(KeyboardInterrupt, SystemExit):
+		print"Quitting cardreader.py..."
+		print"Closing cursor"
+		cursor.close()
+		print"Closing Database connection"
+		cnx.close()
+		print"Quitting"
+		quit()
 cursor.close()
 cnx.close()
 quit()
