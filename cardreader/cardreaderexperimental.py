@@ -20,15 +20,16 @@ from time import sleep
 today = datetime.now().date()
 
 #connect to mysql database
-try:
-	cnx = mysql.connector.connect(user='admin', password= "adminpass", host = '54.194.12.154', database='cardreader_development')
-except mysql.connector.Error as err:
-	if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-		print("Something is wrong with your user name or password")
-	elif err.errno == errorcode.ER_BAD_DB_ERROR:
-		print("Database does not exist")
-	else:
-		print(err)
+def connectMySQ(user, password, host, database):
+	try:
+		cnx = mysql.connector.connect(user='admin', password= "adminpass", host = '54.194.12.154', database='cardreader_development')
+	except mysql.connector.Error as err:
+		if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+			print("Something is wrong with your user name or password")
+		elif err.errno == errorcode.ER_BAD_DB_ERROR:
+			print("Database does not exist")
+		else:
+			print(err)
 
 #create cursor object		
 cursor = cnx.cursor()

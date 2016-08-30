@@ -21,10 +21,10 @@ today = datetime.now().date()
 
 #connect to mysql database
 try:
-	cnx = mysql.connector.connect(user='admin', password= "adminpass", host = '54.194.12.154', database='cardreader_development')
+	cnx = mysql.connector.connect(user='python', password= "python", host = '127.0.0.1', database='students')
 except mysql.connector.Error as err:
 	if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-		print("Something is wrong with your user name or password")
+		print("Something is wrong with your user Name or password")
 	elif err.errno == errorcode.ER_BAD_DB_ERROR:
 		print("Database does not exist")
 	else:
@@ -34,17 +34,17 @@ except mysql.connector.Error as err:
 cursor = cnx.cursor()
 
 #queries & commands for MySQL database
-add_student = ("INSERT INTO students (name, cuid, created, updated) VALUES (%s, %s, %s, %s)")
-delete_student = ("DELETE FROM students WHERE cuid =  '{!s}' LIMIT 1")
-update_updated = ("UPDATE students SET updated = '{!s}' WHERE cuid = '{!s}'")
-reassign_card = ("UPDATE students SET Name = '{!s}' WHERE cuid = '{!s}'")
+add_student = ("INSERT INTO students (Name, Card_Number, DateC, LastL) VALUES (%s, %s, %s, %s)")
+delete_student = ("DELETE FROM students WHERE Card_Number =  '{!s}' LIMIT 1")
+update_LastL = ("UPDATE students SET LastL = '{!s}' WHERE Card_Number = '{!s}'")
+reassign_card = ("UPDATE students SET Name = '{!s}' WHERE Card_Number = '{!s}'")
 
-createq = ("SELECT Name, cuid, created, updated FROM students "
-		"WHERE created BETWEEN %s and %s")
-updatedq = ("SELECT Name, cuid, created, updated FROM students "
-		"WHERE updated BETWEEN %s and %s")
-cardq = ("SELECT name, cuid, created, updated FROM students "
-			"WHERE MATCH(cuid) AGAINST('{!s}')")		
+createq = ("SELECT Name, Card_Number, DateC, LastL FROM students "
+		"WHERE DateC BETWEEN %s and %s")
+LastLq = ("SELECT Name, Card_Number, DateC, LastL FROM students "
+		"WHERE LastL BETWEEN %s and %s")
+cardq = ("SELECT Name, Card_Number, DateC, LastL FROM students "
+			"WHERE MATCH(Card_Number) AGAINST('{!s}')")		
 
 
 #code for auto selecting arduino board
@@ -82,10 +82,10 @@ while True:
 				pass
 		if cursor.rowcount == 1:
 			cursor.execute(cardq.format(UID))
-			for (Name, cuid, created, updated) in cursor:
-				print("{}, {} was created on {:%d %b %Y} and last logged in {:%d %b %Y} \n".format(cuid, Name, created, updated))
+			for (Name, Card_Number, DateC, LastL) in cursor:
+				print("{}, {} was DateC on {:%d %b %Y} and last logged in {:%d %b %Y} \n".format(Card_Number, Name, DateC, LastL))
 			try:
-				cursor.execute(update_updated.format(today, UID))
+				cursor.execute(update_LastL.format(today, UID))
 				cnx.commit()
 			except:
 				cnx.rollback()
@@ -103,11 +103,11 @@ while True:
 				else:
 					pass
 			elif reassign == True:
-				new_name = raw_input("Please enter new name: \n")
+				new_Name = raw_input("Please enter new Name: \n")
 				try:
-					cursor.execute(reassign_card.format(new_name, UID))
+					cursor.execute(reassign_card.format(new_Name, UID))
 					cnx.commit()
-					print("Updated name")
+					print("LastL Name")
 				except:
 					cnx.rollback()
 					print("Something went wrong updating user")
@@ -118,8 +118,8 @@ while True:
 			print "Card not in database"
 			add = raw_input('Would you like to add new card? (Y/N)\n')
 			if add.lower() == 'y':
-				name =  raw_input('Enter Name:\n')
-				data_student = (name, UID, today, today)
+				Name =  raw_input('Enter Name:\n')
+				data_student = (Name, UID, today, today)
 				try:
 					cursor.execute(add_student, data_student)
 					cnx.commit()

@@ -21,7 +21,7 @@ today = datetime.now().date()
 
 #connect to mysql database
 try:
-	cnx = mysql.connector.connect(user='admin', password= "adminpass", host = '54.194.12.154', database='cardreader_development')
+	cnx = mysql.connector.connect(user='root', password= "root", host = '127.0.0.1', database='cardreader_development')
 except mysql.connector.Error as err:
 	if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
 		print("Something is wrong with your user name or password")
@@ -62,7 +62,7 @@ except:
 	quit()
 	
 
-quite =  False
+
 while True:
 	try:
 		UID =  ser.readline().replace(" ", "").rstrip()
