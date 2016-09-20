@@ -8,7 +8,7 @@
 #                                                 written in notepad++                                                         #
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 import serial
-import serial.tools.list_ports
+import serial.tools.list_ports as list_ports
 import mysql.connector
 from mysql.connector import errorcode
 import datetime
@@ -17,11 +17,13 @@ from msvcrt import getch
 from msvcrt import kbhit
 from time import sleep
 
-#Instructions:
-#Requires a MySQL 5.7 database with engine: InnoDB and 4 columns: 'name' (VARCHAR(45)), 'cuid' (VARCHAR(45)), 'created' (DATE), 'updated' (DATE)
+#Requires a MySQL 5.7 database with engine: InnoDB and columns: 'name' (VARCHAR(45)), 'year' (VARCHAR(255)), 
+#'age' (VARCHAR(255)), 'contact' (VARCHAR(255))  'cuid' (VARCHAR(45)), 'created' (DATE), 'updated' (DATE), 
+#'school' (VARCHAR(255))
+
 #requires a FULLTEXT index on column 'cuid'
 #if used in conjuction with ruby on rails webserver, create the model using rails and then edit using SQL queries or MySQL workbench
-#import the module as normal
+#import the module
 #create instance of the 'cardreader' class with the arguments host IP address, database name, table name and optionally username and password for root MySQL account
 class cardreader:
 	today = datetime.now().date()
@@ -49,10 +51,11 @@ class cardreader:
 	#automatically detect the com port that the arduino is operating on
 	#currently windows only
 	def connectArduino():
-		ports = list(serial.tools.list_ports.comports())
+		ports = list(list_ports.comports())
 		for p in ports:
 			if "USB-SERIAL CH340" in p[1]:
-				ard = p[1][-6:-1]
+				ard = p[0]
+				#ard = p[1][-6:-1]
 		try:
 			
 			print " Arduino connected on: " + ard
@@ -83,10 +86,11 @@ class cardreader:
 			print("Error deleting student")
 	def updateStudent(self, cuid):
 		try:
-			self.cursor.execute("UPDATE {!s} SET updated = '{!s}' WHERE cuid = '{!s}'".format(self.table, today, cuid))
+			self.cursor.execute("UPDATE {!s} SET updated = '{!s}' WHERE cuid = '{!s}'".format(self.table, self.today, cuid))
+			self.cnx.commit()
 		except:
 			self.cnx.rollback()
-			print("Error updating last login fate")
+			print("Error updating last login")
 	def reassignCard(self, cuid, name):
 		try:
 			self.cursor.execute("UPDATE {!s} SET Name = '{!s}' WHERE cuid = '{!s}'".format(self.table, name, cuid))
@@ -110,11 +114,13 @@ class cardreader:
 			
 	def quitCardbase(self):
 		print"Quitting cardbase.py..."
-		self.cursor.close()
 		print"Closing cursor"
-		self.cnx.rollback()
+		self.cursor.close()
 		print"Closing Database connection"
+		self.cnx.rollback()
 		self.cnx.close()
+		print "Closing serial"
+		self.ser.close()
 		print"Quitting"
 		quit()	
 
@@ -122,51 +128,62 @@ class cardreader:
 
 	
 if __name__ == "__main__":
+	#creating an instance of the cardreader object. In this case connects to MySQL isntance running on my webserver.
 	cards = cardreader('54.194.12.154', 'register_development', 'students')
 	print "Press 'd' to delete card or 'r' to reassign card\n"
+	print "Press control+c or command+c to quit"
+	print "Scan card to continue. "
 	while True:
 		try:
-			print "Scan card to continue. "
-			delete = False
-			reassign = False
-			#code to detect keypress
-			if kbhit() == 1:
-				key = ord(getch())
-				#100 = keycode for 'd'
-				if key == 100:
-					delete = True
-				#114 = keycode for 'r'
-				elif key == 114:
-					reassign = True
-				else:
-					pass
-			cuid = cards.readSerial()
-			print "Card read! UID: " + cuid
-			if cards.cursorRowcount(cuid) == 1:
-				cards.printCard(cuid)
-				if delete:
-					if raw_input("Are you sure you want to delete? (Y/N) \n").lower() == 'y':
-						cards.deleteStudent(cuid)
-						print "Student Deleted"
-					else:
-						pass
-				elif reassign:
-					if raw_input("Are you sure you want to reassign? (Y/N) \n").lower() == 'y':
-						cards.reassignCard(cuid, raw_input("Please enter new name: \n"))
-						print "Card with UID: {!s} reassigned".format(cuid)
-					else:
-						pass
-				else:
-					pass
-			else:
-				print "Card not in database"
-				add = raw_input('Would you like to add new card? (Y/N)\n')
-				if add.lower() == 'y':
-					cards.addStudent(raw_input('Enter Name:\n'), cuid, raw_input('Enter School:\n'))
-					
-				else:
-					pass
-	
 
+			#code to get the cuid of the card being presented
+			#CHANGE TO TRY/EXCEPT SO THAT CODE DOES NOT HANG
+			if(cards.ser.inWaiting()!=0):
+				delete = False
+				reassign = False
+				#code to detect keypresses to change mode
+				if kbhit() == 1:
+					key = ord(getch())
+					#100 = keycode for 'd'
+					if key == 100:
+						delete = True
+					#114 = keycode for 'r'
+					elif key == 114:
+						reassign = True
+					else:
+						pass
+				cuid = cards.readSerial()
+				#message to show that there has been a successful card read and its cuid
+				print "Card read! UID: " + cuid
+				#THIS CODE SHOULD ONLY RUN IF A CARD IS DETECTED
+				if cards.cursorRowcount(cuid) == 1:
+					cards.printCard(cuid)
+					if delete:
+						if raw_input("Are you sure you want to delete? (Y/N) \n").lower() == 'y':
+							cards.deleteStudent(cuid)
+							print "Student Deleted"
+						else:
+							pass
+					elif reassign:
+						if raw_input("Are you sure you want to reassign? (Y/N) \n").lower() == 'y':
+							cards.reassignCard(cuid, raw_input("Please enter new name: \n"))
+							print "Card with UID: {!s} reassigned".format(cuid)
+						else:
+							pass
+					else:
+						cards.updateStudent(cuid)
+						pass
+				else:
+					print "Card not in database"
+					add = raw_input('Would you like to add new card? (Y/N)\n')
+					if add.lower() == 'y':
+						cards.addStudent(raw_input('Enter Name:\n'), cuid, raw_input('Enter School:\n'))	
+					else:
+						pass
+				print "Scan card to continue. "
+			else:
+				
+				pass
+		#quits python script when command c is pressed
 		except(KeyboardInterrupt, SystemExit):
 			cards.quitCardbase()
