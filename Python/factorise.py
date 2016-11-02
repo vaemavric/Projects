@@ -35,9 +35,25 @@ def primeFactorise(n):
  powers.reverse()
  print factors
  print powers
+
+def  benchmark(n):
+	t = []
+	for i in range(0,5):
+		init = time.time()
+		primeFactorise(n[i])
+		fin = time.time()
+		t.append(fin-init)
+	return t
+def average(times):
+		total = 0
+		for i in times:
+			total = total+i
+		return total/len(times)
+	
 #primeFactorise(int(raw_input("Type number to factorise:\n")))
-init = time.time()
-primeFactorise(5678902342349209)
-fin = time.time()
-taken = fin-init
-print("Time taken: {}".format(taken))
+
+#primeFactorise(5678902342349209)
+a = benchmark([567890234239, 567890234239, 567890234239, 567890234239, 567890234239])
+print(a)
+t = average(a)
+print("Mean time taken: {}".format(t))
