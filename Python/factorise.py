@@ -1,4 +1,5 @@
 import math
+import time
 def primeFactorise(n):
  factors = [n]
  for i in range(2, int(math.sqrt(n))+1):
@@ -34,4 +35,9 @@ def primeFactorise(n):
  powers.reverse()
  print factors
  print powers
-primeFactorise(int(raw_input("Type number to factorise:\n")))
+#primeFactorise(int(raw_input("Type number to factorise:\n")))
+init = time.time()
+primeFactorise(5678902342349209)
+fin = time.time()
+taken = fin-init
+print("Time taken: {}".format(taken))

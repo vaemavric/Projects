@@ -38,9 +38,13 @@ def cycleLengths(a,b, m):
 	
 #print(affine('A', 5, 8, 26))
 #print(generateCycle("A",5,8,26))
-print(getallCycles(5,8,26))
-#coprime26 = [1,3,5,7,9,11,15,17,19,21,23,25]
+#print(getallCycles(5,8,26))
+coprime26 = [1,3,5,7,9,11,15,17,19,21,23,25]
 #for j in coprime26:
 #	#print("a={}".format(j))
 #	for i in range(0,26):
 #		print(cycleLengths(j, i, 26))
+for i in range(0,26):
+	print("3x+{}".format(i))
+	cycles = getallCycles(3,i,26)
+	print(cycles)
